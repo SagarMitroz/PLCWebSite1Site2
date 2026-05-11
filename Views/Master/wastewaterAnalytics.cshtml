@@ -1,0 +1,223 @@
+﻿<div style="margin:1%;">
+
+
+
+
+
+    <div class="container-fluid text-center">
+        <h2 class="text-primary mb-4 fw-bold" style="color:#046bff">Waste Water Analytics</h2>
+
+        <!-- First Row: Controls -->
+        <div class="row mb-4 align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+
+                <!-- Left side: Dropdown + Excel Button -->
+                
+
+                <!-- Right side: Date Picker + Search Button -->
+                <div class="d-flex gap-2">
+                    <div>
+                        <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;">
+                            <i class="fa fa-calendar"></i>&nbsp;
+                            <span></span> <i class="fa fa-caret-down"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" type="button" id="searchButton">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Second Row: Table -->
+        <div class="row">
+            <div class="col-12">
+             
+                <canvas id="waterAnalyticsChart" width="500" height="180"></canvas>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between my-3">
+            <!-- Left: Entry info -->
+            <div class="col-auto">
+                <p id="entry-info" class="mb-0"></p>
+            </div>
+
+            <!-- Right: Pagination -->
+            
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+
+
+
+<script>
+           let startDate = moment(); // Set to today
+        let endDate = moment();   // Set to today
+        
+        let waterChart;
+        function cb(start, end) {
+            startDate = start;
+            endDate = end;
+            $('#reportrange span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
+        }
+
+        $(function () {
+            $('#reportrange').daterangepicker({
+                startDate: startDate,
+                endDate: endDate,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(startDate, endDate); // Display initial range
+            fetchData(); // Load today’s data on page load
+
+            $('#searchButton').on('click', function () {
+               
+                fetchData();
+            });
+
+
+                // Trigger fetchData when page size is changed
+        
+
+            // Pagination button clicks
+           
+        });
+
+        function fetchData() {
+            
+
+            $.ajax({
+                url: '/Master/waterAnalytics', // Adjust as needed
+                type: 'GET',
+                data: {
+                   
+                    startDate: startDate.format('YYYY-MM-DD'),
+                    endDate: endDate.format('YYYY-MM-DD')
+                },
+                success: function (data) {
+                    console.log("Data ::", data);
+
+    const labels = data.data.map(item => item.date.split('T')[0]);
+
+    const fs101 = data.data.map(item => item.fs101);
+    const fs102 = data.data.map(item => item.fs102);
+    const fs302 = data.data.map(item => item.fs302);
+    const fs301 = data.data.map(item => item.fs301);
+    const fs303 = data.data.map(item => item.fs303);
+    const fs601 = data.data.map(item => item.fs601);
+
+    //  Destroy old chart if it exists
+    if (waterChart) {
+        waterChart.destroy();
+    }
+
+    const ctx = document.getElementById('waterAnalyticsChart').getContext('2d');
+    waterChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+                datasets: [
+        {
+            label: 'Waste',
+            data: fs101,
+            borderColor: 'blue',
+            fill: false
+        },
+        {
+            label: 'F/W',
+            data: fs102,
+            borderColor: 'green',
+            fill: false
+        },
+        {
+            label: 'Permeate',
+            data: fs302,
+            borderColor: 'red',
+            fill: false
+        },
+        {
+            label: 'Drain',
+            data: fs301,
+            borderColor: 'orange',
+            fill: false
+        },
+        {
+            label: 'WO',
+            data: fs601,
+            borderColor: 'brown',
+            fill: false
+        }
+    ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation: 90,
+                        minRotation: 45
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Value (in hours)'
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Daily Water Analytics'
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+                      
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                }
+            });
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${month}/${day}/${year}`;
+        }
+
+        //export Excel
+        
+</script>

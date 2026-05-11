@@ -1,0 +1,2 @@
+﻿[2025-04-21 13:19:23] ERROR in Run1(): The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+[2025-04-21 13:21:01] ERROR in Run1(): The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to

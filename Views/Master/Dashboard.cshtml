@@ -1,0 +1,1685 @@
+﻿
+@{
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<style>
+	#controls {
+		margin: 20px;
+	}
+
+	.flowtext {
+		font-size: 0.8rem;
+	}
+
+	.scale-numbers {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 10px;
+		margin-top: 0px;
+	}
+
+	.margc {
+		margin-top: -55px;
+	}
+
+	.row2mb {
+		margin-top: -65px;
+	}
+
+	.mobpre {
+		height: 220px
+	}
+
+	.tanklevelbar {
+		width: 20%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.cardtextfiltsub {
+		font-size: 0.7rem;
+		text-align: left;
+	}
+
+	.cardh {
+		height: 80%;
+	}
+
+	.cardh1 {
+		height: 75%;
+	}
+
+	.cardh2 {
+		height: 95%;
+	}
+
+	.cardh3 {
+		height: 70%;
+	}
+
+	.marginCan {
+		margin-bottom: 50px;
+	}
+
+	.twocardh {
+		margin-top: -48px;
+	}
+
+	.guagesw {
+		max-width: 150px;
+	}
+
+	/*  1158-768 */
+
+	@@media (min-width: 1023px) and (max-width: 1368px) {
+
+		.tankleveltext {
+			font-size: 0.6rem;
+		}
+
+		.cardh {
+			height: 90%;
+		}
+
+		.row2mb {
+			margin-top: 0px;
+		}
+
+		.gb {
+			width: 102px;
+			max-height: 60px;
+			margin-top: 10px;
+			font-size: 1rem;
+			color: white;
+		}
+
+		.c1 {
+			--bs-card-spacer-x: 0px;
+		}
+
+		.temp {
+			--bs-card-spacer-x: 2px;
+		}
+
+		.prt {
+			--bs-gutter-x: 0px;
+		}
+	}
+
+
+
+
+
+	@@media screen and (max-width: 1920px) {
+
+		.twt {
+			font-size: 0.86rem;
+		}
+
+		.tnkper {
+			font-size: 1.5rem;
+			margin-top: -10px;
+		}
+
+		.barcontainer {
+			width: 50px;
+			height: 140px;
+		}
+	}
+
+
+	@@media (max-width:374px) {
+
+		.cardh {
+			height: 95%;
+		}
+
+		.tankleveltext {
+			font-size: 0.55rem;
+		}
+
+
+
+		.row2mb {
+			margin-top: 0px;
+		}
+
+		.gubcode {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.gcntr {
+			margin-left: 15vw;
+		}
+
+		.cardh1 {
+			height: 95%;
+		}
+
+		.cardh3 {
+			height: 75%;
+		}
+
+		.mobpre {
+			height: 250px;
+		}
+
+		.marginCan {
+			margin-bottom: 0px;
+		}
+
+		.cardh2 {
+			height: 100%;
+		}
+
+		.margc {
+			margin-top: 0px;
+		}
+
+		.pgb {
+			width: 60%;
+		}
+	}
+
+
+	@@media (min-width: 577px) and (max-width:767px) {
+		.cardtextfiltsub {
+			font-size: 0.6rem;
+			text-align: left;
+		}
+
+		.commoncontentW {
+			width: 50%;
+		}
+
+		.roratembh {
+			width: 50%;
+		}
+
+		.pbutton {
+			width: 100%;
+		}
+
+		.tanklevelbar {
+			width: 18%;
+		}
+
+		.row2mb {
+			margin-top: 0px;
+		}
+
+		.flowrow {
+			--bs-gutter-x: 0px;
+			margin-top: -75px;
+		}
+
+		.cardh {
+			height: 95%;
+		}
+
+		.cardh1 {
+			height: 95%;
+		}
+
+		.flowtext {
+			font-size: 0.7rem;
+		}
+
+
+		.cardh2 {
+			height: 100%;
+		}
+
+		.cardh3 {
+			height: 80%;
+		}
+
+		.pcardh {
+			height: 80%;
+		}
+	}
+
+
+	@@media (min-width: 768px) and (max-width: 1023px) {
+
+		.flowtext {
+			font-size: 0.7rem;
+		}
+
+		.c1 {
+			--bs-card-spacer-x: 0px;
+		}
+
+		.cardtextfilt {
+			font-size: 1rem;
+		}
+
+		.cardtextfiltsub {
+			font-size: 0.6rem;
+			;
+		}
+
+
+		.cardimage {
+			height: 30px;
+			margin-bottom: 10px;
+		}
+
+		.cardh3 {
+			height: 80%;
+		}
+
+		.guagesw {
+			max-width: 170px
+		}
+
+		.tankleveltext {
+			width: 100%;
+		}
+
+		.mdash {
+			width: 100%
+		}
+
+		.commoncontentW {
+			width: 50%;
+		}
+
+		body {
+			font-size: 18px;
+			padding: 20px;
+		}
+
+		.container {
+			max-width: 90%;
+		}
+
+
+		.cardh {
+			height: 90%;
+		}
+
+		.row2mb {
+			margin-top: 0px;
+		}
+
+		.flowrow {
+			--bs-gutter-x: 0px;
+			margin-top: -55px;
+		}
+
+		.cardh {
+			height: 95%;
+		}
+
+		.cardh1 {
+			height: 95%;
+		}
+
+		.pcardh {
+			height: 80%;
+		}
+	}
+
+
+
+
+	@@media (min-width: 375px) and (max-width:576px) {
+
+		.cardh {
+			height: 95%;
+		}
+
+		.tankleveltext {
+			font-size: 0.55rem;
+		}
+
+
+
+		.row2mb {
+			margin-top: 0px;
+		}
+
+		.gubcode {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.gcntr {
+			margin-left: 15vw;
+		}
+
+		.cardh1 {
+			height: 95%;
+		}
+
+		.cardh3 {
+			height: 75%;
+		}
+
+		.mobpre {
+			height: 250px;
+		}
+
+		.marginCan {
+			margin-bottom: 0px;
+		}
+
+		.cardh2 {
+			height: 100%;
+		}
+
+		.margc {
+			margin-top: 0px;
+		}
+
+		.pgb {
+			width: 50%;
+		}
+	}
+
+</style>
+
+
+
+
+<div style="margin:1%;">
+	<h5 id="siteIdforsocket1" style="display:none;">@ViewBag.SiteId</h5>
+	<div class="container-fluid">
+
+		<div class="row ">
+			<p id="siteIdforsocket" style="display:none;">1</p>
+
+			<div class="col-lg-4 col-md-8 roratembh">
+
+				<div class="card  cardh " data-class="clickable-card" data-url="/Master/tankreport" style="background: #eef5ff;box-shadow: #70abff 1.95px 1.95px 2.6px;">
+					<div class="card-body">
+						<div class="row align-items-center " style="padding-left: 8px;">
+							<div class="col-auto">
+								<img src="/assets/images/icon/tanklevicon.svg" alt="Temperature Icon"
+									 style="height: 45px; width: 45px;">
+							</div>
+							<div class="col-auto">
+								<span class="fw-bold" style="color: #000;font-size:1rem">Tank Levels </span>
+
+							</div>
+						</div>
+						<div class="row mt-1" style="padding-left: 9px;padding-right: 9px;">
+							<div class="col-md-8">
+								<span class="twt" style="color: #000;">Clean Water Available in Tank </span>
+							</div>
+							<div class="col-md-4 d-flex justify-content-end align-items-center">
+								<span class="fw-bold tnkper" id="Tc_6_tag" style="color: #29bb2e;font-size: 1.8rem;">00%</span>
+							</div>
+						</div>
+
+						<div class="row">
+
+							<div id="tankLevels" class="d-flex flex-wrap">
+								<!-- Tanks will load here -->
+							</div>
+
+
+						</div>
+
+
+
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="col-lg-3 col-md-4  roratembh">
+				<div class="card navigate-card cardh" data-class="clickable-card" data-url="/Master/monitorreport" style="background: #eef5ff;box-shadow: #70abff 1.95px 1.95px 2.6px;">
+					<div class="card-body" style="    height: 400px !important;">
+						<div class="row">
+							<div class="col-6 mdash align-self-center">
+								<span class="fw-bold" style="color: #000;font-size:1rem">Water Usage</span>
+							</div>
+
+							<div class="col-6 mdash align-self-center">
+								<input class="form-control" style="padding: 6px 6px;" type="date" id="dateInput" name="name" value="" />
+
+
+							</div>
+							<div class="row">
+								<span class="text-dark" id="dateofrec" style="font-size:0.9rem"> </span>
+
+
+							</div>
+							<div class="col-12 align-self-center" id="chartContainer">
+								<canvas id="myDonutChart" height="180" style="width:100%; max-width:300px; height:266px;"></canvas>
+
+							</div>
+							<div id="noDataMessage" style="display: none; color: red; font-weight: bold;">
+								No data received.
+							</div>
+
+
+
+							<div class="row mt-1 flowrow" style="--bs-gutter-x: 10px;">
+								<!-- First Row -->
+								<div class="col-6 label-item flowtext text-dark">
+									<i class="bi bi-circle-fill" style="color: #C10033;"></i>Waste
+									<span id="wastew" class="ms-2 fw-bold">(0.00)</span>
+								</div>
+								<div class="col-6 label-item flowtext text-dark">
+									<i class="bi bi-circle-fill" style="color: #009A97;"></i> F/W
+									<span id="fww" class="ms-2 fw-bold">(0.00)</span>
+								</div>
+								<!-- Second Row -->
+								<div class="col-6 label-item flowtext text-dark" style="display:none;">
+									<i class="bi bi-circle-fill" style="color: #2B5797;"></i> Drain
+									<span id="drainw" class="ms-2 fw-bold">(0.00)</span>
+								</div>
+								<div class="col-6 label-item flowtext text-dark">
+									<i class="bi bi-circle-fill" style="color: #E8C3B9;"></i> Permeate
+									<span id="permitw" class="ms-2 fw-bold">(0.00)</span>
+								</div>
+								<div class="col-6 label-item flowtext text-dark">
+									<i class="bi bi-circle-fill" style="color: #1E7145;"></i> WO
+									<span id="wow" class="ms-2 fw-bold">(0.00)</span>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7 col-lg-5 fcwp roratembh">
+				<div class="card  cardh" data-class="clickable-card" data-url="/Master/flowreport" style="background: #eef5ff;box-shadow: #70abff 1.95px 1.95px 2.6px;">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6 align-self-center">
+								<span class="fw-bold" style="color: #000;font-size:1rem">Flow Meter</span>
+							</div>
+
+						</div>
+
+
+						<div class="pl-4 fp" style="height:240px">
+							<canvas class="mobpre" id="myChart"></canvas>
+						</div>
+
+						<!-- Dynamic flow meter labels will be injected here -->
+						<div class="row mt-1 flowrow" id="flowLabels"></div>
+
+						<!-- Reset zoom button -->
+
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<div class="col-lg-3 col-md-5 fcwp row2mb roratembh">
+
+				<div class="card  cardh1 " data-class="cleanwater" data-url="/Master/cleanwaterparameterreport" style="background: #eef5ff;box-shadow: #70abff 1.95px 1.95px 2.6px;">
+					<div class="card-body fcwp">
+						<div class="row ">
+
+							<div class="col-auto">
+								<span class="fw-bold" style="color: #000;font-size:1rem">Clean Water Parameters  </span>
+
+							</div>
+							<!-- Card 1 -->
+							<div class="col-12 mt-1">
+								<div class="card c1 cwp" style="background: #5f9bee;margin-bottom: 6px;">
+									<div class="card-body" style="--bs-card-spacer-y: 2px;">
+
+										<div class="row clrow" style="padding: 4px;">
+											<div class="col-6  cwp" style="line-height:16px">
+												<span class="fw-bold" style="font-size: 0.85rem; color: white;border-bottom: 1px solid blue;padding-bottom: 3px;">
+													pH
+												</span> <br />
+												<span style="font-size: 12px; color: white;">
+													PLS
+													601
+												</span>
+
+											</div>
+
+											<div class="col-6 " style="line-height:16px">
+												<span class="fw-bold" id="cwp-2"
+													  style="font-size: 1rem; color: white;">00</span> <span style="font-size: 0.85rem; color: white;">pH</span>
+												<br />
+												<span style="font-size: 0.85rem; color: white;">
+													(7.2 - 7.8 &#177;)
+												</span>
+											</div>
+
+
+										</div>
+
+									</div>
+								</div>
+
+
+
+
+							</div>
+
+
+
+							<div class="col-12 ">
+								<div class="card c1 cwp" style="background: #5f9bee;margin-bottom: 6px;box-shadow: #70abff 1.95px 1.95px 2.6px;">
+									<div class="card-body" style="--bs-card-spacer-y: 2px;">
+
+										<div class="row p-1">
+											<div class="col-6 " style="line-height:16px">
+												<span class="fw-bold" style="font-size: 0.85rem; color: white;border-bottom: 1px solid blue;padding-bottom: 3px;">
+													Chlorine
+												</span> <br />
+												<span style="font-size: 12px; color: white;">
+													CLS_601
+												</span>
+
+											</div>
+											<div class="col-6" style="line-height:16px">
+												<span class="fw-bold" id="cwp-3"
+													  style="font-size: 1rem; color: white;">00</span> <span style="font-size: 0.85rem; color: white;">mg/L</span>
+												<br />
+												<span style="font-size: 0.85rem; color: white;">
+													(-0.1 - 0.3 &#177;)
+												</span>
+
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="col-12 ">
+
+
+								<div class="card c1" style="background: #5f9bee;margin-bottom: 6px;">
+									<div class="card-body" style="--bs-card-spacer-y: 2px;">
+
+										<div class="row p-1">
+											<div class="col-6" style="line-height:16px">
+												<span class="fw-bold" style="font-size: 0.85rem; color: white;border-bottom: 1px solid blue;padding-bottom: 3px;">
+													Conductivity
+												</span> <br />
+												<span style="font-size: 12px; color: white;">
+													QCS
+													601
+												</span>
+
+											</div>
+											<div class="col-6" style="line-height:16px">
+												<span class="fw-bold" id="cwp-1"
+													  style="font-size: 1rem; color: white;">00</span> <span style="font-size: 0.85rem; color: white;">uS/M</span>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+							<div class="col-12">
+								<div class="card c1" style="background: #5f9bee;margin-bottom: 6px;box-shadow: #70abff 1.95px 1.95px 2.6px;">
+									<div class="card-body" style="--bs-card-spacer-y: 2px;">
+
+										<div class="row p-1">
+											<div class="col-6" style="line-height:16px">
+												<span class="fw-bold" style="font-size: 0.85rem; color: white;border-bottom: 1px solid blue;padding-bottom: 3px;">
+													Turbidity
+												</span> <br />
+												<span style="font-size: 12px; color: white;">
+													QS
+													301
+												</span>
+
+											</div>
+											<div class="col-6" style="line-height:16px">
+												<span class="fw-bold" id="cwp-4"
+													  style="font-size: 1rem; color: white;">00</span> <span style="font-size:0.85rem; color: white;">ppm</span>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<!-- Card 2 -->
+
+
+						</div>
+
+
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-lg-6 col-md-7 row2mb roratembh">
+				<div class="card pcardh cardh1" data-class="pressure" data-url="/Master/pressurereport" style="background: #eef5ff;box-shadow: #046BFF 1.95px 1.95px 2.6px;">
+					<div class="card-body">
+						<div class="row align-items-center ">
+							<div class="col-auto">
+								<img src="/assets/images/icon/metericon.svg" alt="Temperature Icon"
+									 style="height: 45px; width: 45px;">
+							</div>
+							<div class="col-auto">
+
+								<div class="col-auto">
+									<span class="fw-bold" style="color: #000;font-size:1rem">Pressure  </span>
+
+								</div>
+							</div>
+						</div>
+						<div class="row gubcode">
+							<!-- First Gauge -->
+
+							<span></span>
+							<div class="row" id="pressureGauges">
+								<!-- Dynamic pressure gauges will be injected here -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-lg-3 col-md-5 row2mb roratembh">
+				<div class="card w-100 " style="background-color:#f9fbfd;-webkit-box-shadow:none;box-shadow:none;">
+					<div class="card-body p-0">
+						<div class="row" style="--bs-gutter-x:2px;">
+							<!-- Top Card (Full Width) -->
+							<div class="col-12 mb-3">
+								<div class="card temp cardh2  cardh3" data-class="temp" data-url="/Master/tempreport"
+									 style="background-color: #eef5ff; box-shadow: #70abff 1.95px 1.95px 2.6px;">
+									<div class="card-body">
+										<div class="row align-items-center" style="--bs-gutter-x:0px;">
+											<div class="col-auto">
+												<img src="/assets/images/icon/tempicon.svg" alt="Temperature Icon" style="height: 45px; width: 45px;">
+											</div>
+											<div class="col-auto">
+												<span class="fw-bold" style="color: #000;font-size:1rem">Temperature</span>
+											</div>
+										</div>
+
+										<div class="row mb-2 mt-1" id="temperatureBars" style="--bs-gutter-x:0px;">
+											<!-- Dynamic temperatures will be inserted here -->
+										</div>
+
+										
+									</div>
+								</div>
+							</div>
+
+							<!-- Bottom Two Cards (Side by Side) -->
+							<div class="col-6">
+								<div class="card margc cardh2" style="background-color: #fe6612; ">
+									<div class="card-body text-center">
+										<span class="card-title cardtextfilt"
+											  style="color: white;" id="runtime">0.0</span><span style="font-size: 12px;color:white">hrs</span>
+
+										<div class="row mt-2 prt">
+											<div class="col-md-8  mdash">
+												<p class="cardtextfiltsub" style="color: white;">Filtration Run Time </p>
+
+											</div>
+
+											<div class="col-md-4 mdash">
+												<img class="cardimage" src="/assets/images/icon/watchicon.svg" alt="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-6">
+								<div class="card margc cardh2 " style="background-color: #203eb6;">
+									<div class="card-body text-center">
+										<span class="card-title cardtextfilt" id="backflush" style="color: white;">9</span>
+
+										<div class="row mt-2 prt">
+											<div class="col-md-8 mdash ">
+												<p class="cardtextfiltsub" style="color: white;">No. of Backwash Cycle </p>
+											</div>
+											<div class="col-md-4 mdash">
+												<img class="cardimage" src="/assets/images/icon/reuseicon.svg" alt="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+
+
+
+
+
+
+	</div>
+</div>
+
+
+<div id="toast-container" style="
+    position: fixed;
+    top: 4%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: none;
+    background:#DC1D24;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+">
+	<span id="toast-message"></span>
+</div>
+<div id="netAlert"
+	 class="alert alert-danger text-center fw-bold"
+	 style="display:none; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;">
+	⚠️ No Internet Connection — no PLC data received for over 10 minutes!
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!-- apps -->
+<!-- apps -->
+
+<script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+<script>
+
+	 let timeStamps = [];
+	 let datasets = {}; // store flow arrays keyed by code
+	 let myChart;
+
+	 //  on page load
+	 $(document).ready(function () {
+
+			//tanks Load
+			 loadTanks();
+
+			//temp
+			loadTemps();
+
+		 //Pressures
+		  loadPressures();
+
+		 // Load flows and build chart
+
+		  loadchart();
+
+			  initializeChartPage();
+			  loadBackwash();
+				setInterval(loadBackwash, 900000);
+
+	});
+
+	function loadBackwash() {
+		$.ajax({
+			url: '/Master/GetBackwashCount', // Controller/Action
+			type: 'GET',
+			success: function (response) {
+				$('#backflush').text(response);
+			},
+			error: function () {
+				console.log('Error while fetching backwash data');
+			}
+		});
+	}
+
+
+	//Cycle mapping dictionary
+		const cycleStepMap = {
+		1: {
+			name: "VENTING RUNNING",
+			steps: {
+				1: "(INACTIVE)",
+				2: "(READY TO START)",
+				3: "(CITY WATER FILLING)",
+				4: "(SYSTEM VALVE OPEN)",
+				5: "(START PMP 301 LOW FREQ)",
+				6: "(START PMP 301 HIGH FREQ)",
+				7: "(STOP PMP 301)",
+				8: "(CLOSE SYSTEM VALVE)"
+			}
+		},
+		2: {
+			name: "FILTRATION RUNNING",
+			steps: {
+				1: "(INACTIVE)",
+				2: "(READY TO START)",
+				4: "(OPEN SYSTEM VALVE)",
+				5: "(START PMP 301)",
+				6: "(START PMP 302)",
+				8: "BACKFLUSH SEQ (STOP PMP 301)",
+				9: "BACKFLUSH SEQ (PMP 302 MINIMAL)",
+				10: "BACKFLUSH SEQ (CLOSE PERMEATE)",
+				11: "BACKFLUSH SEQ (OPEN BACKFLUSH VALVES)",
+				12: "BACKFLUSH SEQ (START PMP 303)"
+			}
+		},
+		3: {
+			name: "FLUSHING RUNNING",
+			steps: {
+				1: "(INACTIVE)",
+				2: "(READY TO START)",
+				3: "(EFFLUENT FILLING)",
+				4: "(SYSTEM HITTING)",
+				5: "(OPEN VALVES VLV 303 & VLV 3011)",
+				6: "(START PMP 301)",
+				7: "(OPEN VLV 302)",
+				8: "(CLOSE PREVIOUS VALVE & FLUSH)",
+				9: "(OPEN VALVE 304)",
+				10: "(CLOSE VALVE 302 & FLUSH)",
+				11: "(OPEN VALVE 306)",
+				12: "(CLOSE VALVE 304 & FLUSH)",
+				13: "(OPEN VALVE 305)",
+				14: "(CLOSE VALVE 306 & FLUSH)",
+				15: "(STOP PMP 301)",
+				16: "(CLOSE ALL VALVE)"
+			}
+		},
+		4: {
+			name: "CIP RUNNING",
+			steps: {
+				1: "(INACTIVE)",
+				2: "(READY TO START)",
+				3: "(CITY WATER FILLING)",
+				4: "(OPEN SYSTEM VALVE)",
+				5: "(START PMP 301)",
+				6: "(START PMP 302)",
+				7: "(START DOSING PUMP)",
+				8: "(CIP TIMER)",
+				9: "(STOP PUMPS)",
+				10: "(CLOSE ALL VALVES)"
+			}
+		},
+		5: {
+			name: "T3 DRAIN RUNNING",
+			steps: {
+				1: "(INACTIVE)",
+				2: "(INACTIVE)",
+				3: "(READY TO START)",
+				4: "(VALVE COMMAND)",
+				5: "(VALVE OPEN)"
+			}
+		},
+		6: {
+			name: "T4 DRAIN RUNNING",
+			steps: {
+				1: "(INACTIVE)",
+				2: "(INACTIVE)",
+				3: "(READY TO START)",
+				4: "(VALVE COMMAND)",
+				5: "(VALVE OPEN)"
+			}
+		},
+		7: {
+			name: "T6 DRAIN RUNNING",
+			steps: {
+				1: "(INACTIVE)",
+				2: "(INACTIVE)",
+				3: "(READY TO START)",
+				4: "(VALVE COMMAND)",
+				5: "(VALVE OPEN)"
+			}
+		}
+	};
+
+
+
+	 // All functions
+	 //tanks
+	 function loadTanks() {
+		 $.ajax({
+		 url: '/Master/GetSiteTanks',
+		 type: 'GET',
+		 success: function (data) {
+
+			 var container = $('#tankLevels');
+			 container.empty();
+
+			 $.each(data, function (i, item) {
+				 container.append(
+					 '<div class="tanklevelbar" data-code="' + item.code + '">' +
+						 '<div class="tankname">' +
+							 '<span style="color: #009bfb;font-size: 12px;">' + "T"+item.id  + '</span>' +
+						 '</div>' +
+						 '<div class="barcontainer">' +
+							 '<div class="bar" id="bar_' + item.name + '" style="height:0%"></div>' +
+						 '</div>' +
+						 '<div id="detail_' + item.name + '" class="tankleveltext ttext">0%</div>' +
+					 '</div>'
+				 );
+
+				 if (item.isCwTank) {
+					$('#Tc_6_tag').text('0%'); // Initial value
+					$('#Tc_6_tag').data('tankName', item.name); // store tank name for updates
+				}
+			 });
+
+
+		 }
+	 });
+	 }
+
+	 //temp
+	 function loadTemps(){
+		 $.ajax({
+		url: '/Master/Getsitetemp',
+		type: 'GET',
+		success: function (data) {
+			var container = $('#temperatureBars');
+			container.empty();
+
+			// Create bars dynamically
+			$.each(data, function (i, item) {
+				var tempHtml = `
+					<div class="col-md-6 mdash">
+						<span style="font-size: 12px; color: #000;">${item.name}</span>
+						<span id="tempLabel_${item.code}" style="font-size: 12px; color: #f3a423;">0 &#8451;</span>
+						<div class="temperature-bar">
+							<div class="fill" id="tempFill_${item.code}"></div>
+						</div>
+						<span style="font-size:0.65rem">(45-60 &#8451;)</span>
+					</div>
+				`;
+				container.append(tempHtml);
+			});
+
+			// Call update with actual values
+			let mappedData = data.reduce((acc, item) => {
+				acc[item.code] = item.value;  // API must send value field
+				return acc;
+			}, {});
+			updateTemperatures(mappedData);
+		}
+	});
+	 }
+
+	 //pressure
+	 function loadPressures() {
+		 $.ajax({
+		 url: '/Master/GetSitePressures',   // your controller endpoint
+		 type: 'GET',
+		 success: function (data) {
+			 var container = $('#pressureGauges');
+			 container.empty();
+
+			 $.each(data, function (i, item) {
+				 // Dynamic gauge block
+				 var gaugeHtml = `
+					 <div class="col-md-3 mt-2 commoncontentW">
+						 <div class="wrapper gcntr">
+							 <div class="gauge guagesw" id="${item.code.toLowerCase()}"
+								  style="--rotation:0deg; --color:${getColor(i)}; --background:#e9ecef;">
+								 <div class="percentage"></div>
+								 <div class="mask"></div>
+								 <span id="${item.code.toLowerCase()}-value" class="value">
+									 00<br><span class="gtbar">Bar</span>
+								 </span>
+							 </div>
+						 </div>
+						 <div class="d-grid mt-2 col-12 pbutton pgb gcntr roratembh">
+							 <button class="btn btn-primary" style="background-color:${getColor(i)}; line-height: 11px;" type="button">
+								 ${item.name} <br />
+								 <span style="font-size:0.5rem">(Pressure)</span>
+							 </button>
+						 </div>
+					 </div>
+				 `;
+				 container.append(gaugeHtml);
+			 });
+
+			 // Always add TMP gauge at the end (calculated one)
+			 container.append(`
+				 <div class="col-md-3 mt-2 commoncontentW">
+					 <div class="wrapper gcntr">
+						 <div class="gauge guagesw" id="ps_tmp"
+							  style="--rotation:0deg; --color:#29BB2E; --background:#e9ecef;">
+							 <div class="percentage"></div>
+							 <div class="mask"></div>
+							 <span id="ps_tmp-value" class="value">
+								 00<br><span class="gtbar">Bar</span>
+							 </span>
+						 </div>
+					 </div>
+					 <div class="d-grid mt-2 col-12 pbutton pgb gcntr roratembh">
+						 <button class="btn btn-primary" style="background-color:#29BB2E; line-height: 11px;" type="button">
+							 TMP <br />
+							 <span style="font-size:0.5rem">(Trans membrane pressure)</span>
+						 </button>
+					 </div>
+				 </div>
+			 `);
+		 }
+	 });
+
+	 }
+
+	 //flowchart
+	 function loadchart(){
+		 $.ajax({
+		 url: '/Master/GetSiteFlows',
+		 type: 'GET',
+		 success: function (flows) {
+
+			 const chartDatasets = [];
+			 const labelContainer = $("#flowLabels");
+			 labelContainer.empty();
+
+				 flows.forEach((flow, i) => {
+		 const color = getColor(i);
+
+		 // Initialize dataset for this flow
+		 datasets[flow.code] = [];
+		 chartDatasets.push({
+			 label: flow.code,
+			 data: datasets[flow.code],
+			 borderColor: color,
+			 pointRadius: 2,
+			 fill: false
+		 });
+
+		 // Safe id for DOM element
+				 const safeId = flow.code.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+
+				 // Build label with matching color
+					labelContainer.append(`
+	  <div class="col-6 col-md-4 label-item flowtext text-dark">
+		<i class="bi bi-circle-fill" style="color:${color};"></i>
+		${flow.code}
+		<span id="${safeId}-value" class="ms-2 fw-bold">(0.00)</span>
+	  </div>
+	`);
+			 });
+
+			 const ctx = document.getElementById("myChart").getContext("2d");
+			 myChart = new Chart(ctx, {
+				 type: 'line',
+				 data: {
+					 labels: timeStamps,
+					 datasets: chartDatasets
+				 },
+				 options: {
+
+				 responsive: true, // Ensures the chart resizes
+				maintainAspectRatio: window.innerWidth > 768,
+			   animation: false,
+
+			   scales: {
+				 x: {
+				   type: 'time',
+				   time: {
+					 unit: 'minute',
+					 tooltipFormat: 'HH:mm:ss',
+					 displayFormats: {
+					   second: 'HH:mm:ss',
+					   minute: 'HH:mm'
+					 }
+				   },
+				   title: {
+					 display: true,
+					 text: 'Time'
+				   }
+				 },
+				 y: {
+				   title: {
+					 display: true,
+					 text: 'Sensor Value'
+				   }
+				 }
+			   },
+
+			   plugins: {
+				 // Configure tooltips
+				 tooltip: {
+				   callbacks: {
+					 label: function(context) {
+					   const label = context.dataset.label || '';
+					   const value = context.parsed.y !== null ? context.parsed.y : 'N/A';
+					   return `${label}: ${value}`;
+					 }
+				   }
+				 },
+				 // Zoom and pan configuration
+				 zoom: {
+				   pan: {
+					 enabled: true,
+					 mode: 'x'
+				   },
+				   zoom: {
+					 wheel: {
+					   enabled: true,
+					 },
+					 pinch: {
+					   enabled: true
+					 },
+					 mode: 'x'
+				   }
+				 },
+				 legend: {
+				   display: false,
+				   position: 'top'
+				 }
+			   }
+
+
+
+				 }
+			 });
+
+			 // ✅ Only init socket once (after everything is ready)
+			 initSocket();
+		 }
+	 });
+	 }
+
+
+	 //Socket Intilization
+	   function initSocket() {
+
+		   
+
+			const siteId = document.getElementById("siteIdforsocket1").innerText.trim();
+		
+		 //  //const socket = io('https://socket-botnotch.mitroztech.com/');
+		 // // const socket = io('http://localhost:3000');
+		 //  const socket = io('https://plcsocket.mitroztech.com/');
+		 //  //onst socket = io('https://socket-botnotch.mitroztech.com/');
+		 //  //const socket = io('http://13.202.25.44:3001/');
+
+		//  console.log("Current Site ID:", siteId);
+
+		// Default socket URL (you can customize for each site)
+		let socketUrl;
+		 
+		switch (siteId) {
+			case "1":
+				socketUrl = "https://socket-botnotch.mitroztech.com/";
+				break;
+			
+			case "3":
+				socketUrl = "https://shaftesburysoc.botnotch.com/";
+				break;
+			default:
+				socketUrl = "https://socket-botnotch.mitroztech.com/"; // fallback
+				break;
+		}
+
+		// Initialize socket dynamically
+		let socket = io(socketUrl);
+
+
+
+		  socket.on('connect', () => {
+			  console.log("Connected to PLC socket ✅");
+		  });
+
+		  socket.on('disconnect', () => {
+			  console.warn("Disconnected from PLC socket ❌");
+		  });
+
+			 socket.on('dataUpdate', (data) => {
+			  // Sometimes PLC sends JSON string → parse it safely
+			  let plcData = (typeof data === "string") ? JSON.parse(data) : data;
+			 // console.log("PLC Data:", plcData);
+			  // Update tanks
+			  updateTankUI(plcData);
+
+			  // Update flow meters chart
+			  updateChart(plcData.Values);
+
+			  updatePressures(plcData);
+
+			   updateTemperatures(plcData);
+
+			   updateCwpValues(plcData)
+
+			   updateCycleStatus(plcData);
+			   
+		  });
+	  }
+
+
+
+
+
+	  // Function: update tank UI with live values
+		 function updateTankUI(data) {
+
+			 Object.entries(data.Values).forEach(([key, value]) => {
+				 let bar = document.getElementById("bar_" + key);
+				 let detail = document.getElementById("detail_" + key);
+
+				 if (bar && detail) {
+					 let percent = Math.min(Math.max(value, 0), 100); // Clamp between 0–100
+					 bar.style.height = percent + "%";
+					 detail.innerHTML = percent.toFixed(1) + "%";
+
+					 // Color thresholds
+					 if (percent >= 100) {
+						 bar.style.backgroundColor = "red";
+						 let tankNo = key.split("_")[1];  // "01"
+
+						 showToast(`⚠️ Tank ${tankNo} is full!`);
+					 }  else {
+						 bar.style.backgroundColor = "#89d2ff";
+					 }
+					  let cwTankName = $('#Tc_6_tag').data('tankName');
+			if (cwTankName && key === cwTankName) {
+				$('#Tc_6_tag').text(percent.toFixed(1) + "%");
+			}
+				 }
+			 });
+		 }
+
+
+
+			
+
+		 //function for chart update live values
+	 function updateChart(newData) {
+		 const now = new Date();
+		 timeStamps.push(now);
+
+			 Object.keys(datasets).forEach(code => {
+		 const val = newData[code] ?? 0;
+
+		 // Update chart data
+		 datasets[code].push(val);
+
+		 // Update UI label
+		 const safeId = code.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+		 let span = document.getElementById(safeId + "-value");
+		 if (span) span.textContent = `(${val.toFixed(2)})`;
+	 });
+
+		 // Keep only last 5 minutes of data
+		 const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
+		 while (timeStamps.length && timeStamps[0] < fiveMinutesAgo) {
+			 timeStamps.shift();
+			 Object.values(datasets).forEach(arr => arr.shift());
+		 }
+
+		 myChart.update();
+	 }
+
+
+
+	 //pressuredat ui update with live values
+
+	  function updatePressures(data2) {
+		 // Normal gauges
+		 Object.entries(data2.Values).forEach(([key, value]) => {
+			 let gauge = document.getElementById(key.toLowerCase());
+			 let label = document.getElementById(key.toLowerCase() + "-value");
+
+			 if (gauge && label) {
+				 const inputValue = Math.max(value, 0);
+				 const scaledValue = scaleValue(inputValue);
+
+				 gauge.style.setProperty("--rotation", scaledValue + "deg");
+				 label.innerHTML = inputValue.toFixed(2) + "<br><span class='gtbar'>Bar</span>";
+			 }
+		 });
+
+		 // TMP (formula)
+		 
+			 let ans = ((data2.Values.PS_301 + data2.Values.PS_302) / 2) - data2.Values.PS_303;
+			 let final = Math.max(ans, 0);
+
+			 let gauge = document.getElementById("ps_tmp");
+			 let label = document.getElementById("ps_tmp-value");
+
+			 if (gauge && label) {
+				 const scaledValue = scaleValue(final);
+				 gauge.style.setProperty("--rotation", scaledValue + "deg");
+				 label.innerHTML = final.toFixed(2) + "<br><span class='gtbar'>Bar</span>";
+			 }
+		 
+	 }
+
+
+
+				// One function to update bars
+		function updateTemperatures(data) {
+		Object.entries(data.Values).forEach(([key, value]) => {
+			let fill = document.getElementById("tempFill_" + key);
+			let label = document.getElementById("tempLabel_" + key);
+
+			if (fill && label) {
+				let tempValue = Math.max(value, 0);
+				let percent = Math.min((tempValue / 100) * 100, 100);
+
+				// Horizontal fill
+				fill.style.width = percent + "%";
+				label.innerHTML = tempValue.toFixed(1) + " &#8451;";
+
+				// Color thresholds
+				if (tempValue >= 60) {
+					fill.style.backgroundColor = "red";
+				} else if (tempValue >= 45) {
+					fill.style.backgroundColor = "#f3a423";
+				} else {
+					fill.style.backgroundColor = "green";
+				}
+			}
+				if (key === "FILTRATION_RUN_HRS") {
+		const runtimeMinutes = parseFloat(value) || 0;
+		const runtimeHours = runtimeMinutes / 60; // convert to hours
+
+		document.getElementById("runtime").textContent = runtimeHours.toFixed(2);
+
+		
+	}
+
+	if (key === "SELECTED_CYCLE") {
+			const cycleNo = parseInt(value) || 0;
+			const stepNo = parseInt(data.Values?.STEP_NO) || 0;
+
+			const cycleInfo = cycleStepMap[cycleNo];
+			let displayText = "No Active Cycle";
+			if (cycleInfo) {
+				const stepText = cycleInfo.steps[stepNo] || "(UNKNOWN STEP)";
+				displayText = `${cycleInfo.name} ${stepText}`;
+			}
+
+			document.getElementById("Selectedcycle").innerText = displayText;
+			
+		}
+
+		if (key === "BACKFLUSH_COUNT") 
+		{
+
+			let divElement1 = document.getElementById("backflush");
+
+
+			if (divElement1) {
+							//  divElement1.innerHTML = value.toFixed(1); // Set height to 10%
+			}
+		}
+
+		});
+	}
+
+
+	//clean water parameter
+
+	{
+			function updateCwpValues(data) {
+		Object.entries(data.Values).forEach(([key, value]) => {
+			let elementId = null;
+
+			if (key === "QS_301") {
+				elementId = "cwp-4";
+			} else if (key === "PHS_601") {
+				elementId = "cwp-2";
+			} else if (key === "CLS_601") {
+				elementId = "cwp-3";
+			} else if (key === "QCS_601") {
+				elementId = "cwp-1";
+			}
+
+			if (elementId) {
+				let divElement = document.getElementById(elementId);
+				if (divElement) {
+					divElement.innerHTML = value.toFixed(1);
+				}
+			}
+		});
+	}
+	}
+	//  cycles data
+			function updateCycleStatus(plcData) {
+		let selectedCycle = plcData.Values.Selected_Cycle;
+		let stepNo = plcData.Values.Step_No;
+
+		if (selectedCycle !== undefined && stepNo !== undefined) {
+			let element = document.getElementById("Selectedcycle");
+			if (element) {
+				element.innerText = getCycleMessage(selectedCycle, stepNo);
+			}
+		}
+	}
+
+
+
+	// cycle message
+		function getCycleMessage(cycle, stepNo) {
+		const cycleData = cycleStepMap[cycle];
+		if (!cycleData) return "No sequence running";
+
+		const stepMessage = cycleData.steps[stepNo] || "";
+		return stepMessage
+			? `${cycleData.name} ${stepMessage}`
+			: cycleData.name;
+	}
+
+
+
+
+	//common functions
+	 // scale value  function
+	  function scaleValue(inputValue, inputMin = 0, inputMax = 3, outputMin = 0, outputMax = 180) {
+			 return ((inputValue - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) + outputMin;
+		 }
+
+		 //chart colors
+		  function getColor(i) {
+		 const colors = ["red", "green", "blue", "orange", "purple", "brown", "teal", "pink"];
+		 return colors[i % colors.length];
+	 }
+
+	 //toast
+		 function showToast(message) {
+		const toast = document.getElementById("toast-container");
+		const msg = document.getElementById("toast-message");
+
+		msg.innerText = message;
+		toast.style.display = "block";
+
+		// Auto hide after 3 seconds
+		setTimeout(() => {
+			toast.style.display = "none";
+		}, 10000);
+	}
+
+
+
+
+
+
+
+	 let myChartInstance = null;
+
+	function handleDateChange() {
+		const selectedDate = this.value;
+		if (selectedDate) {
+			const dateRange = `${selectedDate} to ${selectedDate}`;
+			loadChartData(dateRange);
+		}
+	}
+
+	function initializeChartPage() {
+		const dateInput = document.getElementById("dateInput");
+		const chartContainer = document.getElementById("chartContainer");
+		const noDataMessage = document.getElementById("noDataMessage");
+
+		if (!dateInput) {
+			console.warn("Date input not found.");
+			return;
+		}
+
+		// Set default date to today
+		const today = new Date().toISOString().split("T")[0];
+		dateInput.value = today;
+
+		// Load chart for default date
+		loadChartData(`${today} to ${today}`);
+
+		// Remove old event listener if already added
+		dateInput.removeEventListener("change", handleDateChange);
+		dateInput.addEventListener("change", handleDateChange);
+	}
+
+	function loadChartData(dateRange) {
+		$.ajax({
+			url: "/Master/GetPieChartData",
+			type: "GET",
+			data: { dateRange: dateRange },
+			dataType: "json",
+			success: function (data) {
+
+				const chartContainer = $("#chartContainer");
+				const noDataMessage = $("#noDataMessage");
+
+				if (!Array.isArray(data) || data.length === 0) {
+					console.error("No chart data received.");
+					chartContainer.hide();
+					noDataMessage.show();
+					return;
+				}
+
+				const pieData = data[0];
+					const fs101 = pieData.fs101 ?? 0;
+	const fs102 = pieData.fs102 ?? 0;
+	const fs301 = pieData.fs301 ?? 0;
+	const fs302 = pieData.fs302 ?? 0;
+	const fs601 = pieData.fs601 ?? 0;
+	const recdate = pieData.dataUsedStartDate ?? "N/A";
+
+	// Assign values to HTML elements
+	document.getElementById("wastew").textContent = `(${fs101.toFixed(2)})`;
+	document.getElementById("fww").textContent = `(${fs102.toFixed(2)})`;
+	document.getElementById("drainw").textContent = `(${fs301.toFixed(2)})`;
+	document.getElementById("permitw").textContent = `(${fs302.toFixed(2)})`;
+	document.getElementById("wow").textContent = `(${fs601.toFixed(2)})`;
+
+	 const date = new Date(recdate);
+
+const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+
+document.getElementById("dateofrec").textContent = `Last Updated On: ${formattedDate}`;
+	 document.getElementById("dateInput").value = recdate;
+
+
+				//const selectedKeys = ["fs101", "fs102", "fs301", "fs302", "fs601"];
+				const selectedKeys = ["fs101", "fs102", "fs302", "fs601"];
+				const yValues = selectedKeys.map(key => pieData[key]);
+				//const xValues = ["Waste", "F/W", "Drain", "Permeate", "WO"];
+				const xValues = ["Waste", "F/W","Permeate", "WO"];
+
+				const barColors = [
+					"#b91d47", "#00aba9",
+					"#e8c3b9", "#1e7145", "#f39c12"
+				];
+
+				chartContainer.show();
+				noDataMessage.hide();
+
+				const ctx = document.getElementById("myDonutChart");
+
+				if (myChartInstance) {
+					myChartInstance.destroy();
+				}
+
+				   const fsper = pieData.fsper !== undefined ? pieData.fsper.toFixed(2) : "0.00";
+
+				myChartInstance = new Chart(ctx, {
+					type: "bar",
+					data: {
+						labels: xValues,
+						datasets: [{
+							backgroundColor: barColors,
+							data: yValues
+						}]
+					},
+				   options: {
+		plugins: {
+			legend: {
+				display: false
+			},
+			title: {
+				display: true,
+				//text: `${fsper} % Water Processed`,
+				position: 'bottom',
+				font: {
+		weight: 'bold',
+		size: 14
+	}
+			}
+		}
+	}
+				});
+			},
+			error: function (error) {
+				console.error("Error fetching chart data:", error);
+			}
+		});
+	}
+
+
+</script>
+
+@* <script>
+		function checkConnectionStatus() {
+		$.ajax({
+			url: '/Master/CheckConnection',
+			type: 'GET',
+			success: function (data) {
+				if (data.isOffline) {
+					$('#netAlert').fadeIn();
+				} else {
+					$('#netAlert').fadeOut();
+				}
+			},
+			error: function () {
+				$('#netAlert').fadeIn().text('⚠️ Unable to contact server');
+			}
+		});
+	}
+
+	// Run immediately when page loads
+	checkConnectionStatus();
+
+	// Check every 1 minute (60000 ms)
+	setInterval(checkConnectionStatus, 60000);
+</script> *@

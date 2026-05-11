@@ -1,0 +1,464 @@
+﻿<div style="margin:3%;">
+
+
+
+
+
+    <div class="container-fluid text-center">
+        <h2 class="text-primary mb-4 fw-bold" style="color:#046bff">Waste Water Usage Report</h2>
+
+        <!-- First Row: Controls -->
+        <div class="row mb-4 align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+
+                <!-- Left side: Dropdown + Excel Button -->
+                <div class="d-flex gap-2">
+                    <div>
+                        <select id="pageSize" class="form-select" aria-label="Page number">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="btn btn-success" id="exportExcelBtn" type="button">
+                            <i class="fa fa-file-excel"></i> Export to Excel
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right side: Date Picker + Search Button -->
+                <div class="d-flex gap-2">
+                    <div>
+                        <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;">
+                            <i class="fa fa-calendar"></i>&nbsp;
+                            <span></span> <i class="fa fa-caret-down"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" type="button" id="searchButton">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Second Row: Table -->
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <thead class=" text-dark" style="background-color: #EEF5FF;">
+                        <tr>
+                            
+                           <th>Date</th>
+                            <th>Wastewater</th>
+                            <th>FW/BW</th>
+                            <th>Permeate</th>
+                           
+                             <th>WO</th>
+                        </tr>
+
+                       
+
+
+                    </thead>
+                    <tbody id="dataTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between my-3">
+            <!-- Left: Entry info -->
+            <div class="col-auto">
+                <p id="entry-info" class="mb-0"></p>
+            </div>
+
+            <!-- Right: Pagination -->
+            <div class="col-auto">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination mb-0">
+                        <li class="page-item" id="prevPageBtn">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item disabled">
+                            <span class="page-link" id="pages"></span>
+                        </li>
+                        <li class="page-item" id="nextPageBtn">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+
+
+
+<script>
+       let startDate = moment(); // Set to today
+    let endDate = moment();   // Set to today
+    let currentPage = 1;
+
+    function cb(start, end) {
+        startDate = start;
+        endDate = end;
+        $('#reportrange span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
+    }
+
+    $(function () {
+        $('#reportrange').daterangepicker({
+            startDate: startDate,
+            endDate: endDate,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(startDate, endDate); // Display initial range
+        fetchData(); // Load today’s data on page load
+
+        $('#searchButton').on('click', function () {
+            currentPage = 1;
+            fetchData();
+        });
+
+
+            // Trigger fetchData when page size is changed
+    $('#pageSize').on('change', function () {
+        currentPage = 1; // Reset to first page
+        fetchData();
+    });
+
+        // Pagination button clicks
+        $(document).on('click', '#prevPageBtn', function (e) {
+            e.preventDefault();
+            if ($(this).hasClass('disabled')) return;
+            currentPage = Math.max(1, currentPage - 1);
+            fetchData();
+        });
+
+        $(document).on('click', '#nextPageBtn', function (e) {
+            e.preventDefault();
+            if ($(this).hasClass('disabled')) return;
+            currentPage += 1;
+            fetchData();
+        });
+    });
+
+    function fetchData() {
+        let pageSize = $('#pageSize').val();
+
+        $.ajax({
+            url: '/Master/Getmonitor_report', // Adjust as needed
+            type: 'GET',
+            data: {
+                pageNumber: currentPage,
+                pageSize: pageSize,
+                startDate: startDate.format('YYYY-MM-DD'),
+                endDate: endDate.format('YYYY-MM-DD')
+            },
+            success: function (data) {
+                console.log("Data ::", data);
+
+                   let tbody = $('#dataTableBody');
+    tbody.empty();
+
+    // Use avgData directly (it's not an array)
+    //const row = data.avgData;
+    const pageNumber = data.pageNumber || 1;
+    const totalPages = data.totalPages || 1;
+
+   const rows = data.avgData;
+
+if (!rows || rows.length === 0) {
+    tbody.append('<tr><td colspan="8" class="text-center">No data found</td></tr>');
+} else {
+    rows.forEach(row => {
+        tbody.append(`
+            <tr>
+                <td>${row.date}</td>
+                <td>${row.fs101.toFixed(2)}</td>
+                <td>${row.fs102.toFixed(2)}</td>
+                <td>${row.fs302.toFixed(2)}</td>
+                
+                <td>${row.fs601.toFixed(2)}</td>
+                
+            </tr>
+        `);
+    });
+}
+
+                $('#pages').text(`${pageNumber} of ${totalPages}`);
+
+                // Enable/disable pagination buttons
+                if (pageNumber <= 1) {
+                    $('#prevPageBtn').addClass('disabled');
+                } else {
+                    $('#prevPageBtn').removeClass('disabled');
+                }
+
+                if (pageNumber >= totalPages) {
+                    $('#nextPageBtn').addClass('disabled');
+                } else {
+                    $('#nextPageBtn').removeClass('disabled');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", error);
+            }
+        });
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+    }
+
+    //export Excel
+     $('#exportExcelBtn').on('click', function () {
+        const startDate1 = startDate.format('YYYY-MM-DD')|| '';
+        const endDate1 = endDate.format('YYYY-MM-DD') || '';
+
+        // Trigger file download via window.location
+        window.location.href = `/Master/ExportTowastewater?startDate=${startDate1}&endDate=${endDate1}`;
+    });
+</script>
+
+
+
+
+	</main>
+
+
+
+
+
+
+
+
+
+
+
+	<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- apps -->
+	<!-- apps -->
+	
+	
+
+	
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			fetch('/Auth/CheckUserPermission')
+				.then(response => response.json())
+				.then(hasPermission => {
+					if (hasPermission) {
+						document.querySelectorAll('.auth-options').forEach(el => {
+							el.style.display = 'block';
+						});
+					}
+				})
+				.catch(error => console.error('Permission check failed:', error));
+		});
+	</script>
+
+
+
+	
+	<script>
+			const userRole = 'Admin';
+
+		const notificationButton = $('#notificationButton');
+		const badge = $('#notificationBadge');
+		const alarmButton = $('#alarmNotificationButton');
+		const alarmBadge = $('#alarmNotificationBadge');
+
+		let notificationPopover;
+		let alarmPopover;
+
+		$(document).ready(function() {
+			loadNotifications();
+			setInterval(loadNotifications, 15000);
+			loadAlarms();
+			setInterval(loadAlarms, 20000);
+		});
+
+						function loadNotifications() {
+			let lastCount = localStorage.getItem('lastFiltrationCount') || 0;
+			const badge = $('#notificationBadge');
+			const notificationButton = $('#notificationButton');
+			let notificationPopover;
+
+			$.ajax({
+				url: '/Master/GetFiltrationNotifications',
+				type: 'GET',
+				success: function (data) {
+					const currentCount = data.notifications.length;
+
+					// 🔴 Show or hide red dot based on new records
+					if (currentCount > lastCount) {
+						badge.removeClass('d-none'); // show red dot
+					} else {
+						badge.addClass('d-none'); // hide red dot
+					}
+
+					// Save current count
+					localStorage.setItem('lastFiltrationCount', currentCount);
+
+					// --- Build popover content ---
+
+					let content = `
+						<div style="max-height:200px; overflow-y:auto;">
+							<table class="table table-sm table-borderless mb-0">
+								<thead>
+									<tr>
+										<th>Event</th>
+										<th>Created On</th>
+									</tr>
+								</thead>
+								<tbody>
+					`;
+
+					data.notifications.slice(0, 3).forEach(function (n) {
+						const createdDate = new Date(n.createdOn);
+						const timeOnly = createdDate.toLocaleTimeString('en-US', { hour12: false });
+						content += `<tr><td>${n.filtrationEvent}</td><td>${timeOnly}</td></tr>`;
+					});
+					if (userRole === 'Admin') {
+					content += `
+								</tbody>
+							</table>
+						</div>
+						<div class="text-center mt-2">
+							<a href="/Master/FiltrationReport" class="btn btn-sm btn-primary">View All</a>
+						</div>
+					`;
+					}
+					// --- Initialize or update popover ---
+					if (!notificationPopover) {
+						notificationPopover = new bootstrap.Popover(notificationButton[0], {
+							html: true,
+							sanitize: false,
+							trigger: 'focus',
+							title: "Today's Filtration Summary",
+							content: content,
+							placement: 'bottom'
+						});
+					} else {
+						const pop = bootstrap.Popover.getInstance(notificationButton[0]);
+						pop.setContent({ '.popover-body': content });
+					}
+				}
+			});
+
+			// 🟢 Hide the red dot once user opens the popover
+			$('#notificationButton').on('shown.bs.popover', function () {
+				$('#notificationBadge').addClass('d-none');
+			});
+		}
+
+
+
+					function loadAlarms() {
+			let lastAlarmCount = localStorage.getItem('lastAlarmCount') || 0;
+			const alarmButton = $('#alarmNotificationButton');
+			const alarmBadge = $('#alarmNotificationBadge');
+			let alarmPopover;
+
+			$.ajax({
+				url: '/Master/PlcAlarmNotifications',
+				type: 'GET',
+				success: function (data) {
+					const currentAlarmCount = data.alarms.length;
+
+					// 🔴 Show red dot only if new alarms exist
+					if (currentAlarmCount > lastAlarmCount) {
+						alarmBadge
+							.removeClass('d-none')
+							.text(''); // empty text → red dot only
+						alarmBadge.css({
+							'padding': '0.4rem', // make it small and round
+							'min-width': '0',
+							'min-height': '0',
+							'border-radius': '50%'
+						});
+					} else {
+						alarmBadge.addClass('d-none'); // hide red dot if no new alarm
+					}
+
+					// Save latest count
+					localStorage.setItem('lastAlarmCount', currentAlarmCount);
+
+					// --- Build content for popover ---
+					let content = `
+						<p style="margin:0; font-weight:bold;">Latest PLC Alarms</p>
+						<div style="max-height:200px; overflow-y:auto;">
+							<table class="table table-sm table-borderless mb-0">
+								<thead><tr><th>Tag Name</th><th>Time</th></tr></thead>
+								<tbody>
+					`;
+
+					data.alarms.forEach(function (a) {
+						const createdDate = new Date(a.createdOn);
+						const timeOnly = createdDate.toLocaleTimeString('en-US', { hour12: false });
+						content += `<tr><td>${a.tagName}</td><td>${timeOnly}</td></tr>`;
+					});
+					if (userRole === 'Admin') {
+					content += `
+								</tbody>
+							</table>
+						</div>
+						<div class="text-center mt-2">
+							<a href="/Master/alarmlogreport" class="btn btn-sm btn-primary">View All</a>
+						</div>
+					`;}
+
+					// --- Initialize or update popover ---
+					if (!alarmPopover) {
+						alarmPopover = new bootstrap.Popover(alarmButton[0], {
+							html: true,
+							sanitize: false,
+							trigger: 'focus',
+							title: 'PLC Alarms',
+							content: content,
+							placement: 'bottom'
+						});
+					} else {
+						const pop = bootstrap.Popover.getInstance(alarmButton[0]);
+						pop.setContent({ '.popover-body': content });
+					}
+				}
+			});
+
+			// 🟢 Hide the red dot once user opens the popover
+			$('#alarmNotificationButton').on('shown.bs.popover', function () {
+				$('#alarmNotificationBadge').addClass('d-none');
+			});
+		}
+
+	</script>

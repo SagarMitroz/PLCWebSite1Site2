@@ -1,0 +1,407 @@
+﻿<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+	body {
+		background-color: #f0f4f8;
+		font-family: 'Arial', sans-serif;
+	}
+
+	.tank-svg {
+		width: 40px;
+		height: 80px;
+		display: block;
+		margin: 0 auto;
+	}
+
+	.flowmeter-img {
+		width: 60px;
+		height: auto;
+		display: block;
+		margin: 0 auto;
+		transition: filter 0.2s;
+	}
+
+	.temp-img {
+		width: 30px;
+		height: auto;
+		display: block;
+		margin: 0 auto;
+		transition: filter 0.2s;
+	}
+
+	.tank-unselected .water-fill {
+		fill: url(#waterGradUnselected);
+	}
+
+	.tank-selected .water-fill {
+		fill: url(#waterGradSelected);
+	}
+
+
+
+	.temp-unselected .temp-img {
+		filter: grayscale(0%) brightness(1);
+	}
+
+
+	.temp-selected .temp-img {
+		filter: sepia(1) hue-rotate(90deg) brightness(1.1); /* Green tint for selected state */
+	}
+
+	.tank-checkbox,
+	.flowmeter-checkbox,
+	.temp-checkbox {
+		display: none !important;
+	}
+</style>
+<div class="container mt-5">
+	<h2 class="mb-4">Settings for User</h2>
+
+	<!-- Tanks section -->
+	<h4>Tanks</h4>
+	<div id="tankCheckboxContainer" class="d-flex flex-wrap gap-3 mb-4">
+		<!-- Dynamic tank SVGs and names will load here -->
+	</div>
+	<div id="cwTankContainer" class="mb-4" style="width:20%">
+		<!-- CW Tank dropdown will load here -->
+	</div>
+
+	<!-- Flow meters section -->
+	<h4>Flow Meter</h4>
+<div id="flowMeterCheckboxContainer" class="d-flex flex-wrap gap-3 mb-4">
+</div>
+
+<h4>Temperatures</h4>
+<div id="tempMeterCheckboxContainer" class="d-flex flex-wrap gap-3 mb-4">
+</div>
+
+	<button id="btnSubmit" class="btn btn-primary mt-4">Submit</button>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addTankModal" tabindex="-1" aria-labelledby="addTankModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addTankModalLabel">Add Tank</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<label for="tankName" class="form-label">Tank Name</label>
+				<input type="text" class="form-control" id="tankName"
+					   placeholder="Enter Tank Name (Format: TL_06)" />
+				<small id="tankError" class="text-danger d-none">⚠ Tank name must be in format TL_XX (e.g., TL_06)</small>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary" id="saveTankBtn">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+	</main>
+
+
+
+
+
+
+
+
+
+
+
+	<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- apps -->
+	<!-- apps -->
+	
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		   const flowMeterSelectedImage = '/assets/settings/blueflowmeter.png';
+		   const flowMeterUnselectedImage = '/assets/settings/whiteflowmeter.png';
+		   const temperatureImage = '/assets/settings/temp.png';
+
+		   $(document).ready(function () {
+			   // Load tank checkboxes from backend
+					   $.ajax({
+			   url: '/User/GetTanks',
+			   type: 'GET',
+			   success: function (data) {
+				   console.log('Tanks:', data);
+
+				   var tankContainer = $('#tankCheckboxContainer');
+				   var cwContainer = $('#cwTankContainer');
+
+				   tankContainer.empty();
+				   cwContainer.empty();
+
+				   // Dynamic tank SVGs with name below
+				   $.each(data, function (i, item) {
+					   var checkedAttr = item.isChecked ? 'checked' : '';
+					   var selectedClass = item.isChecked ? 'tank-selected' : 'tank-unselected';
+					   var fillGrad = item.isChecked ? 'url(#waterGradSelected)' : 'url(#waterGradUnselected)';
+
+					   tankContainer.append(
+						   '<label class="d-flex flex-column align-items-center cursor-pointer ' + selectedClass + '">' +
+							   '<input type="checkbox" class="chkItem tankChk tank-checkbox d-none" value="' + item.id + '" ' + checkedAttr +
+								   ' onchange="toggleTankFill(this)">' +
+							   '<svg class="tank-svg" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">' +
+								   '<defs>' +
+									   '<linearGradient id="waterGradUnselected" gradientUnits="userSpaceOnUse" x1="50" y1="50" x2="50" y2="190">' +
+										   '<stop offset="0" stop-color="#4ec6f3" />' +
+										   '<stop offset="1" stop-color="#2b8cd5" />' +
+									   '</linearGradient>' +
+									   '<linearGradient id="waterGradSelected" gradientUnits="userSpaceOnUse" x1="50" y1="50" x2="50" y2="190">' +
+										   '<stop offset="0" stop-color="#86efac" />' +
+										   '<stop offset="1" stop-color="#059669" />' +
+									   '</linearGradient>' +
+								   '</defs>' +
+								   '<rect x="10" y="10" width="80" height="180" stroke="black" fill="none" stroke-width="2"/>' +
+								   '<line x1="90" y1="10" x2="95" y2="10" stroke="black" stroke-width="2"/>' +
+								   '<line x1="90" y1="50" x2="95" y2="50" stroke="black" stroke-width="2"/>' +
+								   '<line x1="90" y1="100" x2="95" y2="100" stroke="black" stroke-width="2"/>' +
+								   '<line x1="90" y1="150" x2="95" y2="150" stroke="black" stroke-width="2"/>' +
+								   '<path class="water-fill" d="M10 50 Q 50 40 90 50 L90 190 L10 190 Z" fill="' + fillGrad + '"/>' +
+							   '</svg>' +
+							   '<span class="mt-2 text-center">' + item.name + '</span>' +
+						   '</label>'
+					   );
+				   });
+
+				   // CW Tank dropdown
+				   var cwDropdown =
+					   '<label for="cwTankSelect" class="d-block">Select CW Tank:</label>' +
+					   '<select id="cwTankSelect" class="form-control w-100">' +
+						   '<option value="">-- Select --</option>';
+				   $.each(data, function (i, item) {
+					   var selectedAttr = item.isCwTank ? 'selected' : '';
+					   cwDropdown += '<option value="' + item.id + '" ' + selectedAttr + '>' + item.name + '</option>';
+				   });
+				   cwDropdown += '</select>';
+				   cwContainer.append(cwDropdown);
+
+				   // Add more link under tank SVGs
+				   tankContainer.append('<div class="mt-2"><a href="#" id="addMoretank">+Add more</a></div>');
+
+				   // Display initially selected tanks
+				   showSelectedTanks();
+			   }
+		   });
+			   // Load flow meter checkboxes from backend
+		$.ajax({
+			   url: '/User/GetFlowMeters',
+			   type: 'GET',
+			   success: function (data) {
+				   console.log('Flow Meters:', data);
+
+				   var flowMeterContainer = $('#flowMeterCheckboxContainer');
+				   flowMeterContainer.empty();
+
+				   $.each(data, function (i, item) {
+					   var checkedAttr = item.isChecked ? 'checked' : '';
+					   var selectedImg = item.isChecked
+						   ? flowMeterSelectedImage
+						   : flowMeterUnselectedImage;
+
+					   flowMeterContainer.append(
+						   '<label class="d-flex flex-column align-items-center cursor-pointer">' +
+							   '<input type="checkbox" class="chkItem flowMeterChk flowmeter-checkbox d-none" value="' + item.id + '" ' + checkedAttr +
+								   ' onchange="toggleFlowMeterImage(this)">' +
+							   '<img src="' + selectedImg + '" alt="Flowmeter" class="flowmeter-img" onerror="this.onerror=null; this.src=\'' + flowMeterSelectedImage + '\';" />' +
+							   '<span class="mt-2 text-center">' + item.name + '</span>' +
+						   '</label>'
+					   );
+				   });
+
+				   flowMeterContainer.append('<a href="#" id="addMoreLink" class="mt-2">+Add more</a>');
+			   }
+		   });
+
+			   // Load temperature checkboxes
+			   $.ajax({
+				   url: '/User/GetTemps',
+				   type: 'GET',
+				   success: function (data) {
+					   console.log('Temperature Meters:', data);
+					   var tempContainer = $('#tempMeterCheckboxContainer');
+					   tempContainer.empty();
+					   $.each(data, function (i, item) {
+						   var checkedAttr = item.isChecked ? 'checked' : '';
+								   var selectedClass = item.isChecked ? 'temp-selected' : 'temp-unselected';
+		   tempContainer.append(
+			   '<label class="d-flex flex-column align-items-center cursor-pointer ' + selectedClass + '">' +
+				   '<input type="checkbox" class="chkItem tempChk temp-checkbox d-none" value="' + item.id + '" ' + checkedAttr +
+					   ' onchange="this.parentElement.classList.toggle(\'temp-selected\', this.checked); this.parentElement.classList.toggle(\'temp-unselected\', !this.checked);">' +
+					  '<img src="' + temperatureImage + '" alt="Temperature" class="temp-img" onerror="this.onerror=null; this.src=\'' + temperatureImage + '\';" />' +
+				   '<span class="mt-2 text-center">' + item.name + '</span>' +
+			   '</label>'
+		   );
+
+					   });
+					   tempContainer.append('<a href="#" id="addMoreTempLink" class="mt-2">+ Add more</a>');
+				   }
+			   });
+
+			   // Load pressure checkboxes
+			   $.ajax({
+				   url: '/User/GetPressures',
+				   type: 'GET',
+				   success: function (data) {
+					   console.log('Pressure Meters:', data);
+					   var pressureContainer = $('#pressureMeterCheckboxContainer');
+					   pressureContainer.empty();
+					   $.each(data, function (i, item) {
+						   var checkedAttr = item.isChecked ? 'checked' : '';
+						   pressureContainer.append(
+							   '<div>' +
+								   '<input type="checkbox" class="chkItem pressureChk" value="' + item.id + '" ' + checkedAttr + ' /> ' +
+								   '<label>' + item.name + '</label>' +
+							   '</div>'
+						   );
+					   });
+					   pressureContainer.append('<a href="#" id="addMorePressureLink" class="mt-2">+ Add more</a>');
+				   }
+			   });
+
+			   // Function to display selected tanks
+			   function showSelectedTanks() {
+				   var checkboxes = $('.tankChk:checked');
+				   var selected = checkboxes.map(function () {
+					   return $(this).val();
+				   }).get();
+				   $('#selected-tanks').text(selected.length ? `Selected: ${selected.join(', ')}` : 'No tanks selected.');
+			   }
+
+			   // Handle submit button
+			   $('#btnSubmit').click(function () {
+				   var tankSelections = [];
+				   var flowMeterSelections = [];
+				   var tempSelections = [];
+				   var pressureSelections = [];
+
+				   // Collect tank selections
+				   $('.tankChk').each(function () {
+					   tankSelections.push({
+						   id: $(this).val(),
+						   isChecked: $(this).is(':checked')
+					   });
+				   });
+
+				   // Collect flow meter selections
+				   $('.flowMeterChk').each(function () {
+					   flowMeterSelections.push({
+						   id: $(this).val(),
+						   isChecked: $(this).is(':checked')
+					   });
+				   });
+
+				   // Collect temperature selections
+				   $('.tempChk').each(function () {
+					   tempSelections.push({
+						   id: $(this).val(),
+						   isChecked: $(this).is(':checked')
+					   });
+				   });
+
+				   // Collect pressure selections
+				   $('.pressureChk').each(function () {
+					   pressureSelections.push({
+						   id: $(this).val(),
+						   isChecked: $(this).is(':checked')
+					   });
+				   });
+
+				   var cwTankId = $('#cwTankSelect').val();
+
+				   // Create payload
+				   var payload = {
+					   tanks: tankSelections,
+					   flowMeters: flowMeterSelections,
+					   temps: tempSelections,
+					   pressures: pressureSelections,
+					   cwTankId: cwTankId
+				   };
+
+				   // Send data to the controller
+				   $.ajax({
+					   url: '/User/SaveSettings',
+					   type: 'POST',
+					   contentType: 'application/json',
+					   data: JSON.stringify(payload),
+					   success: function (response) {
+						   alert('Settings saved successfully!');
+						   window.location.reload();
+					   },
+					   error: function (xhr, status, error) {
+						   alert('Error saving settings: ' + error);
+						   console.error('Error:', xhr.responseText);
+					   }
+				   });
+			   });
+		   });
+
+
+				   // Toggle function for checkbox
+		   function toggleTankFill(checkbox) {
+			   var label = $(checkbox).parent();
+			   var svg = label.find('svg');
+			   var path = svg.find('.water-fill');
+
+			   if (checkbox.checked) {
+				   label.removeClass('tank-unselected').addClass('tank-selected');
+				   path.attr('fill', 'url(#waterGradSelected)'); // green
+			   } else {
+				   label.removeClass('tank-selected').addClass('tank-unselected');
+				   path.attr('fill', 'url(#waterGradUnselected)'); // blue
+			   }
+
+			   showSelectedTanks();
+		   }
+
+		   function toggleFlowMeterImage(checkbox) {
+			   var img = $(checkbox).siblings('img');
+			   if (checkbox.checked) {
+				   img.attr('src', flowMeterSelectedImage); // selected
+			   } else {
+				   img.attr('src', flowMeterUnselectedImage); // unselected
+			   }
+		   }
+
+
+		   //open modal
+			$(document).on("click", "#addMoretank", function (e) {
+			   e.preventDefault();
+
+			   $("#addTankModal").modal("show");
+		   });
+
+		   $(document).on("click", "#saveTankBtn", function () {
+			   let newTank = $("#tankName").val().trim();
+			   let regex = /^TL_\d{2}$/;  // matches TL_01, TL_06, TL_12 etc.
+
+			   if (!regex.test(newTank)) {
+				   $("#tankError").removeClass("d-none");
+				   return;
+			   }
+
+			   $("#tankError").addClass("d-none");
+			   alert("✅ New Tank Added: " + newTank);
+
+			   // Example: append to container
+			   $("#tankContainer").append(`<div class="tank-item">${newTank}</div>`);
+
+			   $("#addTankModal").modal("hide");
+		   });
+
+
+	</script>
+
+
+	
+	

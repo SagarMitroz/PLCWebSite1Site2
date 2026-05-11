@@ -1,0 +1,317 @@
+﻿
+@{
+	
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venting Control System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .status-green {
+            background-color: #2ecc71;
+        }
+        .status-red {
+            background-color: #ff7675;
+        }
+        .operation-btn {
+            background-color: #74b9ff;
+            border: none;
+            min-width: 100px;
+        }
+        .command-btn {
+            background-color: #ff7675;
+            color: white;
+            border: none;
+            padding: 2px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .step-circle {
+            width: 24px;
+            height: 24px;
+            background-color: #ff7675;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+            
+
+
+        .value-box {
+            background-color: #ffeaa7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+        .table th {
+            background-color: #f8faff;
+            font-weight: 500;
+        }
+
+        
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container-fluid py-4" style="margin-top: 5%;">
+        <h2 class="text-primary mb-4 fw-bold" style="color:#046bff">Venting</h2>
+        <div class="row mb-4">
+            @* <div class="col-12">
+
+
+                <div class="row g-4">
+                    <!-- Start Conditions Card -->
+                    <div class="col-md-4">
+                        <div class="card p-4">
+                            <h6 class="mb-3">Start Conditions</h6>
+                            <div class="d-flex flex-column gap-2">
+                                <div>
+                                    <span class="status-indicator status-green"></span>
+                                    EMERGENCY STOP
+                                </div>
+                                <div>
+                                    <span class="status-indicator status-green"></span>
+                                    APS
+                                </div>
+                                <div>
+                                    <span class="status-indicator status-green"></span>
+                                    SYSTEM HEALTHY
+                                </div>
+                                <div>
+                                    <span class="status-indicator status-red"></span>
+                                    TANK LEVEL T3 OK
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Operations Card -->
+                    <div class="col-md-8">
+                        <h1 class="text-primary mb-4">VENTING</h1>
+                        <div class="card p-4">
+
+                            <h6 class="mb-3">Operations</h6>
+                            <div class="d-flex gap-3">
+                                <button class="btn operation-btn">SELECT</button>
+                                <button class="btn operation-btn">START</button>
+                                <button class="btn operation-btn">STOP</button>
+                                <button class="btn operation-btn">RESET</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> *@
+        </div>
+
+        <!-- Table Section -->
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th>STEP</th>
+                            <th>LEVEL T3 (%)</th>
+                            <th>FREQUENCY (Hz)</th>
+                            <th>TIMER (sec)</th>
+                            <th>COMMAND</th>
+                            <th>MOTOR</th>
+                            <th>VALVE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="step-circle">0</div>
+                                    INACTIVE
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="step-circle" id="step1-circle">1</div>
+                                    READY TO START
+                                </div>
+                            </td>
+                            <td><span id="rt"></span> < <span id="rts" class="value-box">40.0</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="step-circle">2</div>
+                                    CITY WATER FILLING
+                                </div>
+                            </td>
+                            <td>31.1 < <span class="value-box active-condition">40.0</span></td>
+                            <td></td>
+                            <td></td>
+                            <td><button class="command-btn">OFF</button></td>
+                            <td></td>
+                            <td><button class="command-btn">CLOSE</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="step-circle">3</div>
+                                    SYSTEM VALVES OPEN
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button class="command-btn">OFF</button></td>
+                            <td></td>
+                            <td><button class="command-btn">CLOSE</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="step-circle">4</div>
+                                    START PMP 301 LOW FREQ
+                                </div>
+                            </td>
+                            <td><span class="value-box">0</span></td>
+                            <td><span class="value-box">0</span></td>
+                            <td><span class="value-box">0</span></td>
+                            <td><button class="command-btn">OFF</button></td>
+                            <td><button class="command-btn">OFF</button></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="step-circle">5</div>
+                                    START PMP 301 HIGH FREQ
+                                </div>
+                            </td>
+                            <td><span class="value-box">0</span></td>
+                            <td><span class="value-box">0</span></td>
+                            <td><span class="value-box">0</span></td>
+                            <td><button class="command-btn">OFF</button></td>
+                            <td><button class="command-btn">OFF</button></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="step-circle">6</div>
+                                    STOP PMP 301
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button class="command-btn">OFF</button></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="step-circle">7</div>
+                                    CLOSE SYSTEM VALVES
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button class="command-btn">CLOSE</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+
+        //        document.addEventListener("DOMContentLoaded", function () {
+            
+        //     let rtValue = parseFloat(document.getElementById("rt").innerText);
+        //     let rtsValue = parseFloat(document.getElementById("rts").innerText);
+            
+         
+
+        //     Check condition and apply red color
+        //     if (rtValue < rtsValue) {
+        //        document.querySelector("#step1-circle").style.backgroundColor = "#0f9855";
+        //     }else{
+        //          document.querySelector("#step1-circle").style.backgroundColor = "#ff7675";
+        //     }
+        // });
+
+
+
+           $(document).ready(function () 
+           {
+            $.ajax({
+                url: '/Master/GetStepData', // API endpoint in the controller
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    // Update HTML elements with the fetched RT value
+                             if (response && response.rt!== undefined) {
+                    console.log("Updating RT with:", response.rt);
+            $('#rt').text(response.rt); // Update span
+        } else {
+            console.error("RT value missing in response");
+        }
+                    
+                    // Fetch RTS value dynamically after AJAX completes 
+                    let rtValue = parseFloat(response.RT);
+                  
+
+                    let stepCircle = $("#step1-circle");
+
+                    // Apply color logic
+                    // if (rtValue < rtsValue) {
+                    //     stepCircle.css("background-color", "#0f9855"); Green
+                    // } else {
+                    //     stepCircle.css("background-color", "#ff7675"); Red
+                    // }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: " + error);
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,93 @@
+@model List<Water_Filtration.Models.data.User>
+
+<div class="container mt-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">User List</h2>
+
+        <a href="/User/Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Create User
+        </a>
+    </div>
+
+    <!-- Search -->
+    <div class="row mb-3">
+        <div class="col-md-4 ms-auto">
+            <input type="text"
+                   id="searchInput"
+                   class="form-control"
+                   placeholder="Search users...">
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle" id="userTable">
+
+            <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th width="120">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    int i = 1;
+                }
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.Name</td>
+                        <td>@item.Contact</td>
+                        <td>@item.Email</td>
+                        <td>@item.UserName</td>
+
+                        <td>
+                            <a href="/User/Delete/@item.Id"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure want to delete this user?')">
+
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    i++;
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<script>
+    // Simple Search
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+
+        let value = this.value.toLowerCase();
+
+        let rows = document.querySelectorAll("#userTable tbody tr");
+
+        rows.forEach(function (row) {
+
+            let text = row.innerText.toLowerCase();
+
+            if (text.includes(value)) {
+                row.style.display = "";
+            }
+            else {
+                row.style.display = "none";
+            }
+
+        });
+
+    });
+</script>

@@ -1,0 +1,277 @@
+﻿@model Water_Filtration.Modals.Alarm
+@{
+}
+<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.css" rel="stylesheet"   />
+
+<style>
+    .table-container {
+        padding: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .custom-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 8px;
+        overflow: hidden;
+        background: white;
+        border: 1px solid #e0e6ed;
+    }
+
+        .custom-table th {
+            background-color: #eef5ff;
+            font-weight: 500;
+            color: #000;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e0e6ed;
+        }
+
+        .custom-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e0e6ed;
+            color: #000;
+        }
+
+        .custom-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .custom-table tbody tr td:first-child {
+            font-weight: 500;
+        }
+</style>
+<div style="margin:3%;">
+
+    <div class="container-fluid text-center">
+        <h2 class="text-primary mb-4 fw-bold" style="color:#046bff">Alert</h2>
+        <!-- Button to Open the Modal -->
+        <div class="row ">
+            <div class="col-12 d-flex justify-content-start" style="margin:20px">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAlarmModal">
+                    Add Alarm
+                </button>
+          </div>
+       </div>
+
+
+        <div class="table-container">
+            <table id="example" class="table custom-table">
+                <thead>
+                    <tr>
+
+                        <th>Tank</th>
+                       
+                        <th>HH</th>
+                        <th>H</th>
+                        <th>L</th>
+                        <th>LL</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var alarm in Model.Alarms)
+                    {
+                        <tr>
+                            <td>@alarm.TankName</td>
+                            <td>@alarm.HH</td>
+                            <td>@alarm.H</td>
+                            <td>@alarm.L</td>
+                            <td>@alarm.LL</td>
+                            <td>
+                                <a href="#"><i class="bi bi-pencil-square text-primary"></i></a>&nbsp;&nbsp;
+                                <a href="#"><i class="bi bi-trash3 text-danger"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+@* * ******* MODAL  **********@
+<!-- Add Alarm Modal -->
+<div class="modal fade" id="addAlarmModal" tabindex="-1" aria-labelledby="addAlarmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAlarmModalLabel">Add Alarm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addAlarmForm">
+                    <!-- Alarm Name Dropdown -->
+                    <div class="mb-3">
+                        <label for="alarmName" class="form-label">Select Alarm</label>
+                        <select id="alarmName" class="form-select">
+                            <option value="">Select Alarm</option>
+                            <!-- Populate options dynamically from database -->
+                        </select>
+                    </div>
+
+                    <!-- HH and H Inputs in one row -->
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="hh" class="form-label">HH</label>
+                            <input type="text" id="hh" class="form-control" placeholder="HH">
+                        </div>
+                        <div class="col">
+                            <label for="h" class="form-label">H</label>
+                            <input type="text" id="h" class="form-control" placeholder="H">
+                        </div>
+                    </div>
+
+                    <!-- LL and L Inputs in one row -->
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="ll" class="form-label">LL</label>
+                            <input type="text" id="ll" class="form-control" placeholder="LL">
+                        </div>
+                        <div class="col">
+                            <label for="l" class="form-label">L</label>
+                            <input type="text" id="l" class="form-control" placeholder="L">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Save Alarm</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
+
+
+
+
+
+<script>
+    $(document).ready(function ()
+        {
+            $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+                // Add other DataTable options as needed
+            });
+        });
+</script>
+
+
+
+
+
+
+
+
+
+
+ @* <script> *@
+ @*     $(document).ready(function () { *@
+ @*         alert("ok") *@
+ @*        // Fetch alarm names from database *@
+ @*        $.ajax({ *@
+ @*            url: '/Master/GetAlarms', // Adjust this to your actual endpoint *@
+ @*            type: 'GET', *@
+ @*            dataType: 'json', *@
+ @*            success: function (data) { *@
+ @*                console.log(data); *@
+ @*                let alarmDropdown = $("#alarmName"); *@
+ @*                alarmDropdown.empty().append('<option value="">Select Alarm</option>'); *@
+ @*                $.each(data, function (index, alarm) { *@
+ @*                    alarmDropdown.append(`<option value="${alarm.id}">${alarm.name}</option>`); *@
+ @*                }); *@
+ @*            }, *@
+ @*            error: function () { *@
+ @*                alert("Failed to load alarms."); *@
+ @*            } *@
+ @*        }); *@
+     
+ @*    }); *@
+
+ @* </script> *@
+
+
+
+
+<script>
+    $(document).ready(function () {
+        // Fetch alarm names
+        $.ajax({
+            url: '/Master/GetAlarms',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                let alarmDropdown = $("#alarmName");
+                alarmDropdown.empty().append('<option value="">Select Alarm</option>');
+                $.each(data, function (index, alarm) {
+                    alarmDropdown.append(`<option value="${alarm.id}">${alarm.name}</option>`);
+                });
+            },
+            error: function () {
+                alert("Failed to load alarms.");
+            }
+        });
+
+        // Handle form submission
+        $("#addAlarmForm").on("submit", function (e) {
+            e.preventDefault();
+
+            // Manually collect form values
+            let alarmData = {
+                AlarmId: $("#alarmName").val(),
+                HH: $("#hh").val(),
+                H: $("#h").val(),
+                LL: $("#ll").val(),
+                L: $("#l").val()
+            };
+
+            console.log(alarmData); // Debugging purpose
+
+            // Send data via AJAX
+               $.ajax({
+        url: '/Master/SaveAlarm',
+        type: 'POST',
+        contentType: 'application/json', // Ensure this is set
+        data: JSON.stringify(alarmData), // Convert data to JSON format
+        success: function (response) {
+            if (response.success) {
+                alert("Alarm saved successfully!");
+                $("#addAlarmModal").modal("hide");
+                $("#addAlarmForm")[0].reset();
+                window.location.reload();
+            } else {
+                alert("Failed to save alarm: " + response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error); // Log the error for debugging
+            alert("An error occurred while saving the alarm.");
+        }
+    });
+        });
+    });
+</script>
+

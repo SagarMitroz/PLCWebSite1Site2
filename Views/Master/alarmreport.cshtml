@@ -1,0 +1,129 @@
+﻿
+@{
+   
+}
+<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.css" rel="stylesheet"   />
+<style>
+    .table-container {
+        padding: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .custom-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 8px;
+        overflow: hidden;
+        background: white;
+    }
+
+        .custom-table th {
+            background-color: #eef5ff;
+            font-weight: 500;
+            color: #000;
+            padding: 12px;
+            text-align: center;
+          
+        }
+
+        .custom-table td {
+            padding: 12px;
+            text-align: center;
+            
+            color: #000;
+        }
+
+        .custom-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .custom-table tbody tr td:first-child {
+            font-weight: 500;
+        }
+</style>
+<div style="margin:3%;">
+
+    <div class="container-fluid text-center">
+        <h2 class="text-primary mb-4 fw-bold" style="color:#046bff">Alert</h2>
+        <div class="table-container">
+            <table id="example" class="table custom-table">
+                <thead>
+                    <tr>
+                       
+                        <th>DATE</th>
+                        <th>TIME</th>
+                        <th>Alert</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01/02/25</td>
+                        <td>12:20 PM</td>
+                        
+                        <td style="color:red">Tank 4 almost full !!</td>
+                    
+
+                    </tr>
+                    <tr>
+                        <td>01/02/25</td>
+                        <td>02:20 PM</td>
+
+                        <td style="color:red">Tank 2 is empty !!</td>
+
+
+                    </tr>
+                    <tr>
+                        <td>01/02/25</td>
+                        <td>07:20 AM</td>
+
+                        <td style="color:red">Tank 1 almost full !!</td>
+
+
+                    </tr>
+                    <tr>
+                        <td>02/02/25</td>
+                        <td>10:20 AM</td>
+
+                        <td style="color:red">Tank 3 almost full !!</td>
+
+
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
+
+
+
+
+
+<script>
+    $(document).ready(function ()
+        {
+            $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+                // Add other DataTable options as needed
+            });
+        });
+</script>

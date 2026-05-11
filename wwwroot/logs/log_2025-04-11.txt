@@ -1,0 +1,11 @@
+﻿
+[2025-04-11 12:41:47] Starting scheduled task run
+[2025-04-11 12:41:47] Interpolated Water_Filtration.Controllers.scheduledtaskController+PlcdataMain1 rows from original 58
+[2025-04-11 12:41:47] Interpolated Water_Filtration.Controllers.scheduledtaskController+PlcdataMain1 rows from original 58
+[2025-04-11 12:41:47] Interpolated Water_Filtration.Controllers.scheduledtaskController+PlcdataMain1 rows from original 58
+[2025-04-11 12:41:47] Interpolated Water_Filtration.Controllers.scheduledtaskController+PlcdataMain1 rows from original 58
+[2025-04-11 12:41:47] Interpolated Water_Filtration.Controllers.scheduledtaskController+PlcdataMain1 rows from original 58
+[2025-04-11 12:41:47] Interpolated Water_Filtration.Controllers.scheduledtaskController+PlcdataMain1 rows from original 58
+[2025-04-11 12:41:47] Interpolated Water_Filtration.Controllers.scheduledtaskController+PlcdataMain1 rows from original 58
+[2025-04-11 12:41:47] Interpolated Water_Filtration.Controllers.scheduledtaskController+PlcdataMain1 rows from original 58
+[2025-04-11 12:41:48] Interpolated 66 rows from original 58
