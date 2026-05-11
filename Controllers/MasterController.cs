@@ -1596,5 +1596,38 @@ namespace Water_Filtration.Controllers
             });
         }
 
+        public IActionResult GetBackwashCount()
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                return Json(0);
+            }
+
+            var dbUser = _context.Users.FirstOrDefault(x => x.Id == userId);
+
+            if (dbUser == null)
+            {
+                return Json(0);
+            }
+
+            int siteFk = (int)dbUser.CompanyFk;
+
+            var backflushDiff = _context.Plcvalues
+                .Where(x => x.SiteFk == siteFk
+                         && x.CreatedOn >= DateTime.Today
+                         && x.CreatedOn < DateTime.Today.AddDays(1))
+                .Max(x => (int?)x.BackflushCount)
+                -
+                _context.Plcvalues
+                .Where(x => x.SiteFk == siteFk
+                         && x.CreatedOn >= DateTime.Today
+                         && x.CreatedOn < DateTime.Today.AddDays(1))
+                .Min(x => (int?)x.BackflushCount);
+
+            return Json(backflushDiff ?? 0);
+        }
+
     }
 }
